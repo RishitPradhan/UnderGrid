@@ -1,86 +1,108 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-    Shield, Radio, MapPin, Bell, Brain, Activity, ChevronRight,
-    Wifi, Satellite, HardHat, AlertTriangle, BarChart3, Layers
+    Shield, Radio, MapPin, Bell, Brain, Activity, ArrowRight,
+    Wifi, Satellite, HardHat, AlertTriangle, BarChart3, Github, ArrowUpRight
 } from "lucide-react";
 
 const features = [
     { icon: MapPin, title: "Real-Time Tracking", desc: "GPS + RFID powered live location tracking for every miner underground with sub-meter accuracy.", color: "#00d4ff" },
-    { icon: AlertTriangle, title: "Hazard Zone Detection", desc: "Haversine distance monitoring with 20m threshold alerts when workers approach unstable zones.", color: "#ff3333" },
-    { icon: Bell, title: "Instant SMS Alerts", desc: "Twilio-powered emergency notifications sent to supervisors when workers enter risk zones.", color: "#ffaa00" },
+    { icon: AlertTriangle, title: "Hazard Zone Detection", desc: "Haversine distance monitoring with 20m threshold alerts when workers approach unstable zones.", color: "#ef4444" },
+    { icon: Bell, title: "Instant SMS Alerts", desc: "Twilio-powered emergency notifications sent to supervisors when workers enter risk zones.", color: "#f59e0b" },
     { icon: Brain, title: "ML Heatmaps", desc: "AI-powered geological deformation analysis with interactive heatmaps from satellite data.", color: "#a855f7" },
-    { icon: BarChart3, title: "Predictive Analytics", desc: "Machine learning models predict land displacement with actual vs predicted visualization.", color: "#00ff88" },
+    { icon: BarChart3, title: "Predictive Analytics", desc: "Machine learning models predict land displacement with actual vs predicted visualization.", color: "#34d399" },
     { icon: Activity, title: "System Observability", desc: "Prometheus metrics + Winston-Loki logging for complete production monitoring.", color: "#ec4899" },
 ];
 
-const techStack = [
-    { icon: Satellite, label: "InSAR Satellite", status: "Connected" },
-    { icon: Radio, label: "LoRa Network", status: "Active" },
-    { icon: Wifi, label: "RFID Grid", status: "Online" },
-    { icon: Shield, label: "AI Engine", status: "Running" },
+const steps = [
+    { num: "01", title: "Deploy Smart Helmets", desc: "Each helmet has RFID + GPS sensors that feed real-time location into the system." },
+    { num: "02", title: "AI Monitors Everything", desc: "Our ML models analyze geological data and worker positions continuously." },
+    { num: "03", title: "Instant Alerts", desc: "When a worker enters a risk zone, supervisors receive SMS and dashboard alerts immediately." },
+    { num: "04", title: "Predictive Safety", desc: "Satellite InSAR data is analyzed to predict land deformation before it becomes dangerous." },
 ];
 
 export default function Landing() {
     return (
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-[#050505] text-white">
             {/* ─── Navbar ─── */}
-            <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl">
-                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center">
-                            <HardHat className="w-5 h-5 text-black" />
+            <nav className="fixed top-0 w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-white/[0.04]">
+                <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+                    <Link to="/" className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-lg bg-cyan-400 flex items-center justify-center">
+                            <HardHat className="w-4 h-4 text-black" />
                         </div>
-                        <span className="text-lg font-bold tracking-tight">undergrid<span className="text-cyan-400">.ai</span></span>
+                        <span className="text-[15px] font-semibold tracking-tight">undergrid<span className="text-cyan-400">.ai</span></span>
+                    </Link>
+                    <div className="hidden md:flex items-center gap-7 text-[13px] text-white/40">
+                        <a href="#features" className="hover:text-white/80 transition-colors">Features</a>
+                        <a href="#how" className="hover:text-white/80 transition-colors">How It Works</a>
+                        <a href="https://github.com/RishitPradhan/UnderGrid" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors flex items-center gap-1">
+                            <Github className="w-3.5 h-3.5" /> GitHub
+                        </a>
                     </div>
-                    <div className="hidden md:flex items-center gap-8 text-sm text-white/50">
-                        <a href="#features" className="hover:text-white transition-colors">Features</a>
-                        <a href="#tech" className="hover:text-white transition-colors">Technology</a>
-                        <a href="#how" className="hover:text-white transition-colors">How It Works</a>
-                    </div>
-                    <Link to="/dashboard" className="btn-primary text-sm flex items-center gap-2">
-                        Open Dashboard <ChevronRight className="w-4 h-4" />
+                    <Link to="/dashboard" className="text-[13px] font-medium text-black bg-cyan-400 hover:bg-cyan-300 px-4 py-1.5 rounded-lg transition-colors">
+                        Dashboard
                     </Link>
                 </div>
             </nav>
 
             {/* ─── Hero ─── */}
-            <section className="relative pt-32 pb-24 overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,212,255,0.08),transparent_60%)]" />
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center max-w-4xl mx-auto">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/60 mb-8">
-                            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                            Mining Safety Intelligence Platform
+            <section className="relative pt-28 pb-20 overflow-hidden">
+                {/* Dot grid background */}
+                <div className="absolute inset-0 dot-grid" />
+                {/* Subtle glow */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-cyan-400/[0.04] rounded-full blur-[120px]" />
+
+                <div className="max-w-6xl mx-auto px-6 relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="max-w-2xl"
+                    >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.06] text-[12px] text-white/50 mb-6">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            Mining Safety Intelligence
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black leading-[0.95] tracking-tight mb-6">
+                        <h1 className="text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-5">
                             Underground
                             <br />
-                            <span className="gradient-text">Command Center</span>
+                            <span className="text-cyan-400">Command Center</span>
                         </h1>
-                        <p className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto mb-10 leading-relaxed">
-                            AI-powered real-time monitoring that keeps every miner safe. Track personnel,
-                            detect hazards, and receive instant alerts — all from one unified dashboard.
+                        <p className="text-base md:text-lg text-white/35 max-w-lg mb-8 leading-relaxed">
+                            Real-time monitoring that keeps every miner safe. Track personnel,
+                            detect hazards, and receive instant alerts — from one unified dashboard.
                         </p>
-                        <div className="flex items-center justify-center gap-4">
-                            <Link to="/dashboard" className="btn-primary text-base px-8 py-3 flex items-center gap-2">
-                                Launch Dashboard <ChevronRight className="w-5 h-5" />
+                        <div className="flex items-center gap-3">
+                            <Link to="/dashboard" className="btn-primary text-sm px-6 py-2.5 flex items-center gap-2">
+                                Launch Dashboard <ArrowRight className="w-4 h-4" />
                             </Link>
-                            <a href="#features" className="btn-ghost text-base px-8 py-3">Explore Features</a>
+                            <a href="#features" className="btn-ghost text-sm px-6 py-2.5">
+                                Learn More
+                            </a>
                         </div>
                     </motion.div>
 
                     {/* Tech Status Strip */}
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}
-                        className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-                        {techStack.map((t) => (
-                            <div key={t.label} className="glass-card p-4 text-center">
-                                <t.icon className="w-6 h-6 mx-auto mb-2 text-cyan-400" />
-                                <div className="text-sm font-medium">{t.label}</div>
-                                <div className="text-xs text-green-400 mt-1 flex items-center justify-center gap-1">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                        className="mt-16 flex flex-wrap gap-3 max-w-2xl"
+                    >
+                        {[
+                            { icon: Satellite, label: "InSAR", status: "Connected" },
+                            { icon: Radio, label: "LoRa", status: "Active" },
+                            { icon: Wifi, label: "RFID", status: "Online" },
+                            { icon: Shield, label: "AI", status: "Running" },
+                        ].map((t) => (
+                            <div key={t.label} className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.05] text-[12px]">
+                                <t.icon className="w-3.5 h-3.5 text-white/30" />
+                                <span className="text-white/50">{t.label}</span>
+                                <span className="text-emerald-400/80 flex items-center gap-1">
+                                    <span className="w-1 h-1 rounded-full bg-emerald-400 inline-block" />
                                     {t.status}
-                                </div>
+                                </span>
                             </div>
                         ))}
                     </motion.div>
@@ -88,24 +110,32 @@ export default function Landing() {
             </section>
 
             {/* ─── Features ─── */}
-            <section id="features" className="py-24 relative">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,255,136,0.04),transparent_60%)]" />
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-4">Powerful <span className="gradient-text">Features</span></h2>
-                        <p className="text-white/40 max-w-xl mx-auto">Everything you need to monitor underground mining operations in real-time.</p>
+            <section id="features" className="py-20 relative">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="mb-12">
+                        <p className="text-[12px] uppercase tracking-widest text-cyan-400/60 mb-2 font-medium">Capabilities</p>
+                        <h2 className="text-2xl md:text-3xl font-bold">
+                            Everything you need to monitor
+                            <br />
+                            underground operations.
+                        </h2>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {features.map((f, i) => (
-                            <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}
-                                className="glass-card p-6 group cursor-default">
-                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                                    style={{ background: `${f.color}15`, border: `1px solid ${f.color}30` }}>
-                                    <f.icon className="w-6 h-6" style={{ color: f.color }} />
+                            <motion.div
+                                key={f.title}
+                                initial={{ opacity: 0, y: 15 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.06, duration: 0.4 }}
+                                className="group p-5 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                            >
+                                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+                                    style={{ background: `${f.color}0a`, border: `1px solid ${f.color}18` }}>
+                                    <f.icon className="w-4 h-4" style={{ color: f.color }} />
                                 </div>
-                                <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                                <p className="text-sm text-white/40 leading-relaxed">{f.desc}</p>
+                                <h3 className="text-[15px] font-semibold mb-1.5">{f.title}</h3>
+                                <p className="text-[13px] text-white/30 leading-relaxed">{f.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -113,56 +143,77 @@ export default function Landing() {
             </section>
 
             {/* ─── How It Works ─── */}
-            <section id="how" className="py-24">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-4">How It <span className="gradient-text">Works</span></h2>
+            <section id="how" className="py-20">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="mb-12">
+                        <p className="text-[12px] uppercase tracking-widest text-cyan-400/60 mb-2 font-medium">Process</p>
+                        <h2 className="text-2xl md:text-3xl font-bold">How it works</h2>
                     </div>
-                    <div className="max-w-3xl mx-auto space-y-8">
-                        {[
-                            { step: "01", title: "Deploy Smart Helmets", desc: "Each helmet has RFID + GPS sensors that feed real-time location into the system." },
-                            { step: "02", title: "AI Monitors Everything", desc: "Our ML models analyze geological data and worker positions to detect potential hazards." },
-                            { step: "03", title: "Instant Alerts", desc: "When a worker enters a risk zone, supervisors receive SMS and dashboard alerts immediately." },
-                            { step: "04", title: "Predictive Safety", desc: "Satellite InSAR data is analyzed to predict land deformation before it becomes dangerous." },
-                        ].map((item, i) => (
-                            <motion.div key={item.step} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                                className="flex gap-6 items-start">
-                                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 font-bold text-lg">
-                                    {item.step}
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                                    <p className="text-white/40">{item.desc}</p>
-                                </div>
-                            </motion.div>
-                        ))}
+                    <div className="max-w-xl relative">
+                        <div className="timeline-line" />
+                        <div className="space-y-10">
+                            {steps.map((item, i) => (
+                                <motion.div
+                                    key={item.num}
+                                    initial={{ opacity: 0, x: -15 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.08 }}
+                                    className="flex gap-5 items-start relative"
+                                >
+                                    <div className="flex-shrink-0 w-[54px] h-[54px] rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-cyan-400/70 font-mono text-sm font-bold z-10">
+                                        {item.num}
+                                    </div>
+                                    <div className="pt-1">
+                                        <h3 className="text-[15px] font-semibold mb-1">{item.title}</h3>
+                                        <p className="text-[13px] text-white/30 leading-relaxed">{item.desc}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* ─── CTA ─── */}
-            <section id="tech" className="py-24">
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                    <div className="glass-card-accent p-12 md:p-16">
-                        <Layers className="w-12 h-12 mx-auto mb-6 text-cyan-400" />
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to go underground?</h2>
-                        <p className="text-white/40 mb-8 max-w-lg mx-auto">Access the real-time command center and monitor your mining operations with AI-powered intelligence.</p>
-                        <Link to="/dashboard" className="btn-primary text-lg px-10 py-4 inline-flex items-center gap-2">
-                            Open Command Center <ChevronRight className="w-5 h-5" />
-                        </Link>
+            <section className="py-20">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-400/[0.06] to-transparent border border-white/[0.05] p-10 md:p-14">
+                        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-400/[0.03] rounded-full blur-[100px]" />
+                        <div className="relative z-10 max-w-lg">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-3">Ready to go underground?</h2>
+                            <p className="text-white/35 mb-6 text-[15px]">
+                                Access the real-time command center and monitor your mining operations with AI-powered intelligence.
+                            </p>
+                            <Link to="/dashboard" className="btn-primary text-sm px-6 py-2.5 inline-flex items-center gap-2">
+                                Open Command Center <ArrowUpRight className="w-4 h-4" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* ─── Footer ─── */}
-            <footer className="border-t border-white/5 py-8">
-                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between text-sm text-white/30">
-                    <div className="flex items-center gap-2">
-                        <HardHat className="w-4 h-4" />
-                        <span>undergrid.ai v2.0</span>
+            <footer className="border-t border-white/[0.04] py-10">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div>
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="w-6 h-6 rounded-md bg-cyan-400 flex items-center justify-center">
+                                    <HardHat className="w-3.5 h-3.5 text-black" />
+                                </div>
+                                <span className="text-[14px] font-semibold">undergrid<span className="text-cyan-400">.ai</span></span>
+                            </div>
+                            <p className="text-[12px] text-white/25">Underground Intelligence Platform</p>
+                        </div>
+                        <div className="flex items-center gap-6 text-[12px] text-white/25">
+                            <a href="https://github.com/RishitPradhan/UnderGrid" target="_blank" rel="noopener noreferrer"
+                                className="hover:text-white/50 transition-colors flex items-center gap-1">
+                                <Github className="w-3.5 h-3.5" /> GitHub
+                            </a>
+                            <span>Built for Hackathon 2026</span>
+                        </div>
                     </div>
-                    <span>Underground Intelligence Platform</span>
                 </div>
             </footer>
         </div>

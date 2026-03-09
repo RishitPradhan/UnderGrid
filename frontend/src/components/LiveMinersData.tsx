@@ -146,7 +146,7 @@ export default function LiveMinersData() {
                             return (
                                 <motion.div key={w._id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.03 }}>
-                                    <div className="glass-card p-5 group hover:border-white/10">
+                                    <div className="glass-card p-5 group hover:border-white/[0.08]" style={{ borderLeft: `2px solid ${rc(w.role)}40` }}>
                                         <div className="flex items-start gap-4 mb-4">
                                             <div className="relative">
                                                 <div className="w-12 h-12 rounded-xl flex items-center justify-center"

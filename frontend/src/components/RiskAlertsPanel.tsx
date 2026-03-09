@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, Clock, RefreshCw, HardHat, Activity, Search, Shield } from "lucide-react";
+import { AlertTriangle, Clock, RefreshCw, HardHat, Activity, Search, Shield, Volume2, VolumeX } from "lucide-react";
 
 interface Worker {
     _id: string; name: string; workerId: string; helmetId: string; role: string;
@@ -21,6 +21,18 @@ export default function RiskAlertsPanel() {
     const [query, setQuery] = useState("");
     const [crossLogs, setCrossLogs] = useState<{ uid: string; name: string; time: string; lat?: number; lng?: number }[]>([]);
     const prevRiskRef = useRef<Record<string, boolean>>({});
+    const [voiceEnabled, setVoiceEnabled] = useState(true);
+
+    // Voice alert function
+    const speak = useCallback((text: string) => {
+        if (!voiceEnabled || !window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        utterance.pitch = 0.9;
+        utterance.volume = 1;
+        window.speechSynthesis.cancel(); // cancel any ongoing speech
+        window.speechSynthesis.speak(utterance);
+    }, [voiceEnabled]);
 
     const fetch_ = async () => {
         try {
@@ -43,6 +55,8 @@ export default function RiskAlertsPanel() {
                             uid: w._id, name: w.name || w.workerId, time: new Date().toISOString(),
                             lat: w.currentLocation?.coordinates?.[1], lng: w.currentLocation?.coordinates?.[0]
                         });
+                        // Voice alert
+                        speak(`Warning: ${w.name || w.workerId} has entered a hazard zone.`);
                     }
                     prev[w._id] = is;
                 });
@@ -71,7 +85,7 @@ export default function RiskAlertsPanel() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="glass-card p-6" style={{ borderColor: "rgba(255,51,51,0.3)" }}>
+            <div className={`glass-card p-6 ${riskWorkers.length > 0 ? "danger-pulse" : ""}`} style={{ borderColor: "rgba(239,68,68,0.2)" }}>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
                     <div>
                         <h2 className="text-xl font-bold flex items-center gap-2 text-red-400">
@@ -87,6 +101,11 @@ export default function RiskAlertsPanel() {
                         </div>
                         <button onClick={fetch_} disabled={loading} className="btn-ghost text-xs px-3 py-1.5">
                             <RefreshCw className={`w-3.5 h-3.5 inline mr-1.5 ${loading ? "animate-spin" : ""}`} /> Refresh
+                        </button>
+                        <button onClick={() => setVoiceEnabled(!voiceEnabled)}
+                            className={`btn-ghost text-xs px-3 py-1.5 flex items-center gap-1.5 ${voiceEnabled ? "text-cyan-400 border-cyan-400/20" : "text-white/30"}`}>
+                            {voiceEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+                            {voiceEnabled ? "Voice On" : "Voice Off"}
                         </button>
                     </div>
                 </div>

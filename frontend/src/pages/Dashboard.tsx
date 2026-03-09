@@ -1,29 +1,29 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     LayoutDashboard, MapPin, Users, AlertTriangle, Radio, ChevronLeft,
-    Satellite, Wifi, Brain, HardHat, Activity, Shield, Menu, X
+    Satellite, Wifi, Brain, HardHat, Activity, Menu, X,
+    FileText, Clock, Crosshair
 } from "lucide-react";
 import LiveMinersData from "@/components/LiveMinersData";
 import HeatmapViewer from "@/components/HeatmapViewer";
 import RiskAlertsPanel from "@/components/RiskAlertsPanel";
 import GeoZoneChart from "@/components/GeoZoneChart";
+import SafetyReport from "@/components/SafetyReport";
+import IncidentTimeline from "@/components/IncidentTimeline";
+import DronePatrol from "@/components/DronePatrol";
 
-type Section = "overview" | "zones" | "miners" | "alerts";
+type Section = "overview" | "zones" | "miners" | "alerts" | "report" | "incidents" | "drone";
 
 const navItems: { id: Section; label: string; icon: any }[] = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
     { id: "zones", label: "Geo Zones", icon: MapPin },
     { id: "miners", label: "Miners", icon: Users },
     { id: "alerts", label: "Alerts", icon: AlertTriangle },
-];
-
-const systemStatuses = [
-    { label: "InSAR Satellite", icon: Satellite, status: "Receiving", color: "#00ff88" },
-    { label: "LoRa Network", icon: Radio, status: "12 Nodes", color: "#00d4ff" },
-    { label: "AI Engine", icon: Brain, status: "Active", color: "#a855f7" },
-    { label: "RFID Grid", icon: Wifi, status: "Online", color: "#ffaa00" },
+    { id: "report", label: "AI Report", icon: FileText },
+    { id: "incidents", label: "Incidents", icon: Clock },
+    { id: "drone", label: "Drone", icon: Crosshair },
 ];
 
 export default function Dashboard() {
@@ -31,63 +31,61 @@ export default function Dashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
     return (
-        <div className="min-h-screen bg-black flex">
+        <div className="min-h-screen bg-[#050505] flex">
             {/* ─── Sidebar ─── */}
-            <aside className={`fixed lg:relative z-40 h-screen transition-all duration-300 ${sidebarOpen ? "w-64" : "w-0 lg:w-20"} bg-surface border-r border-white/5 flex flex-col overflow-hidden`}>
-                {/* Logo */}
-                <div className="h-16 flex items-center px-5 border-b border-white/5 gap-3 flex-shrink-0">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center flex-shrink-0">
-                        <HardHat className="w-5 h-5 text-black" />
+            <aside className={`fixed lg:relative z-40 h-screen transition-all duration-300 ${sidebarOpen ? "w-56" : "w-0 lg:w-16"} bg-[#0a0a0a] border-r border-white/[0.04] flex flex-col overflow-hidden`}>
+                <div className="h-14 flex items-center px-4 border-b border-white/[0.04] gap-2.5 flex-shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-cyan-400 flex items-center justify-center flex-shrink-0">
+                        <HardHat className="w-4 h-4 text-black" />
                     </div>
-                    {sidebarOpen && <span className="text-lg font-bold whitespace-nowrap">undergrid<span className="text-cyan-400">.ai</span></span>}
+                    {sidebarOpen && <span className="text-[14px] font-semibold whitespace-nowrap">undergrid<span className="text-cyan-400">.ai</span></span>}
                 </div>
 
-                {/* Nav */}
-                <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+                <nav className="flex-1 p-2 space-y-0.5 overflow-y-auto">
                     {navItems.map((item) => (
                         <button key={item.id} onClick={() => setActive(item.id)}
                             className={`sidebar-item w-full ${active === item.id ? "active" : ""}`}>
-                            <item.icon className="w-5 h-5 flex-shrink-0" />
-                            {sidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
+                            <item.icon className="w-4 h-4 flex-shrink-0" />
+                            {sidebarOpen && <span className="text-[13px] font-medium">{item.label}</span>}
                         </button>
                     ))}
                 </nav>
 
-                {/* Back to Home */}
-                <div className="p-3 border-t border-white/5">
+                <div className="p-2 border-t border-white/[0.04]">
                     <Link to="/" className="sidebar-item w-full">
-                        <ChevronLeft className="w-5 h-5 flex-shrink-0" />
-                        {sidebarOpen && <span className="text-sm">Back to Home</span>}
+                        <ChevronLeft className="w-4 h-4 flex-shrink-0" />
+                        {sidebarOpen && <span className="text-[13px]">Home</span>}
                     </Link>
                 </div>
             </aside>
 
-            {/* ─── Main Content ─── */}
+            {/* ─── Main ─── */}
             <main className="flex-1 min-w-0 overflow-y-auto">
-                {/* Header */}
-                <header className="sticky top-0 z-30 h-16 bg-black/80 backdrop-blur-xl border-b border-white/5 flex items-center px-6 gap-4">
-                    <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white/40 hover:text-white transition-colors">
-                        {sidebarOpen ? <X className="w-5 h-5 lg:hidden" /> : <Menu className="w-5 h-5" />}
-                        <span className="hidden lg:block">{sidebarOpen ? <ChevronLeft className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</span>
+                <header className="sticky top-0 z-30 h-14 bg-[#050505]/90 backdrop-blur-md border-b border-white/[0.04] flex items-center px-5 gap-3">
+                    <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white/30 hover:text-white/60 transition-colors">
+                        {sidebarOpen ? <X className="w-4 h-4 lg:hidden" /> : <Menu className="w-4 h-4" />}
+                        <span className="hidden lg:block">{sidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <Menu className="w-4 h-4" />}</span>
                     </button>
                     <div className="flex-1">
-                        <h1 className="text-lg font-semibold">{navItems.find(n => n.id === active)?.label}</h1>
-                        <p className="text-xs text-white/30">Underground Command Center</p>
+                        <h1 className="text-[15px] font-semibold">{navItems.find(n => n.id === active)?.label}</h1>
+                        <p className="text-[11px] text-white/25">Underground Command Center</p>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-xs">
-                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        <span className="text-green-400 font-medium">System Online</span>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.03] text-[11px]">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span className="text-emerald-400/80 font-medium">Online</span>
                     </div>
                 </header>
 
-                {/* Content */}
-                <div className="p-6 max-w-[1600px] mx-auto">
+                <div className="p-5 max-w-[1400px] mx-auto">
                     <AnimatePresence mode="wait">
-                        <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
+                        <motion.div key={active} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
                             {active === "overview" && <OverviewSection />}
                             {active === "zones" && <ZonesSection />}
                             {active === "miners" && <MinersSection />}
                             {active === "alerts" && <AlertsSection />}
+                            {active === "report" && <ReportSection />}
+                            {active === "incidents" && <IncidentsSection />}
+                            {active === "drone" && <DroneSection />}
                         </motion.div>
                     </AnimatePresence>
                 </div>
@@ -98,83 +96,88 @@ export default function Dashboard() {
 
 /* ─── Overview ─── */
 function OverviewSection() {
+    const greeting = useMemo(() => {
+        const h = new Date().getHours();
+        if (h < 12) return "Good morning";
+        if (h < 17) return "Good afternoon";
+        return "Good evening";
+    }, []);
+
+    const systemStatuses = [
+        { label: "InSAR Satellite", icon: Satellite, status: "Receiving", color: "#34d399" },
+        { label: "LoRa Network", icon: Radio, status: "12 Nodes", color: "#00d4ff" },
+        { label: "AI Engine", icon: Brain, status: "Active", color: "#a855f7" },
+        { label: "RFID Grid", icon: Wifi, status: "Online", color: "#f59e0b" },
+    ];
+
     return (
-        <div className="space-y-6">
-            {/* Welcome */}
-            <div className="glass-card-accent p-8">
-                <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center">
-                        <Shield className="w-7 h-7 text-black" />
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold">Welcome to undergrid.ai</h2>
-                        <p className="text-white/40">Real-time underground mining safety monitoring</p>
-                    </div>
+        <div className="space-y-5">
+            <div className="glass-card-accent p-6">
+                <div>
+                    <h2 className="text-xl font-bold">{greeting}, Supervisor</h2>
+                    <p className="text-[13px] text-white/35 mt-1">Real-time underground mining safety monitoring</p>
                 </div>
             </div>
 
-            {/* System Status */}
             <div>
-                <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4">System Status</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <h3 className="text-[11px] font-medium text-white/30 uppercase tracking-wider mb-3">System Status</h3>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     {systemStatuses.map((sys) => (
                         <div key={sys.label} className="stat-card">
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                                    style={{ background: `${sys.color}12`, border: `1px solid ${sys.color}30` }}>
-                                    <sys.icon className="w-5 h-5" style={{ color: sys.color }} />
+                            <div className="flex items-center gap-2.5 mb-2.5">
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                                    style={{ background: `${sys.color}08`, border: `1px solid ${sys.color}15` }}>
+                                    <sys.icon className="w-4 h-4" style={{ color: sys.color }} />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-medium">{sys.label}</div>
-                                    <div className="text-xs" style={{ color: sys.color }}>{sys.status}</div>
+                                    <div className="text-[13px] font-medium text-white/70">{sys.label}</div>
+                                    <div className="text-[11px]" style={{ color: sys.color }}>{sys.status}</div>
                                 </div>
                             </div>
-                            <div className="h-1 rounded-full bg-white/5 overflow-hidden">
-                                <div className="h-full rounded-full animate-pulse" style={{ width: "85%", background: sys.color }} />
+                            <div className="h-[3px] rounded-full bg-white/[0.04] overflow-hidden">
+                                <div className="h-full rounded-full" style={{ width: "85%", background: sys.color, opacity: 0.6 }} />
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3">
                 <div className="stat-card">
-                    <div className="text-white/40 text-sm mb-1">Active Miners</div>
-                    <div className="text-3xl font-bold text-cyan-400">9</div>
-                    <div className="text-xs text-white/30 mt-1">Currently tracked underground</div>
+                    <div className="text-white/35 text-[12px] mb-1">Active Miners</div>
+                    <div className="text-2xl font-bold text-cyan-400">9</div>
+                    <div className="text-[11px] text-white/20 mt-1">Currently tracked</div>
                 </div>
                 <div className="stat-card">
-                    <div className="text-white/40 text-sm mb-1">Hazard Zones</div>
-                    <div className="text-3xl font-bold text-red-400">3</div>
-                    <div className="text-xs text-white/30 mt-1">Active risk areas</div>
+                    <div className="text-white/35 text-[12px] mb-1">Hazard Zones</div>
+                    <div className="text-2xl font-bold text-red-400">3</div>
+                    <div className="text-[11px] text-white/20 mt-1">Active risk areas</div>
                 </div>
                 <div className="stat-card">
-                    <div className="text-white/40 text-sm mb-1">Uptime</div>
-                    <div className="text-3xl font-bold text-green-400">99.8%</div>
-                    <div className="text-xs text-white/30 mt-1">Last 30 days</div>
+                    <div className="text-white/35 text-[12px] mb-1">Uptime</div>
+                    <div className="text-2xl font-bold text-emerald-400">99.8%</div>
+                    <div className="text-[11px] text-white/20 mt-1">Last 30 days</div>
                 </div>
             </div>
 
-            {/* Preview Panels */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="glass-card p-6">
-                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <Activity className="w-5 h-5 text-cyan-400" /> Recent Activity
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div className="glass-card p-5">
+                    <h3 className="text-[14px] font-semibold mb-3 flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-cyan-400/70" /> Recent Activity
                     </h3>
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {[
                             { msg: "Worker W003 entered Zone B", time: "2m ago", type: "warning" },
                             { msg: "All systems operational", time: "5m ago", type: "success" },
                             { msg: "Location sync completed", time: "10m ago", type: "info" },
                             { msg: "Heatmap data refreshed", time: "30m ago", type: "info" },
                         ].map((a, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-2 h-2 rounded-full ${a.type === "warning" ? "bg-amber-400" : a.type === "success" ? "bg-green-400" : "bg-cyan-400"}`} />
-                                    <span className="text-sm text-white/70">{a.msg}</span>
+                            <div key={i} className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.03]">
+                                <div className="flex items-center gap-2.5">
+                                    <div className={`w-1.5 h-1.5 rounded-full ${a.type === "warning" ? "bg-amber-400" : a.type === "success" ? "bg-emerald-400" : "bg-cyan-400/60"}`} />
+                                    <span className="text-[13px] text-white/55">{a.msg}</span>
                                 </div>
-                                <span className="text-xs text-white/30">{a.time}</span>
+                                <span className="text-[11px] text-white/20">{a.time}</span>
                             </div>
                         ))}
                     </div>
@@ -185,22 +188,31 @@ function OverviewSection() {
     );
 }
 
-/* ─── Zones ─── */
 function ZonesSection() {
     return (
-        <div className="space-y-6">
+        <div className="space-y-5">
             <HeatmapViewer />
             <GeoZoneChart />
         </div>
     );
 }
 
-/* ─── Miners ─── */
 function MinersSection() {
     return <LiveMinersData />;
 }
 
-/* ─── Alerts ─── */
 function AlertsSection() {
     return <RiskAlertsPanel />;
+}
+
+function ReportSection() {
+    return <SafetyReport />;
+}
+
+function IncidentsSection() {
+    return <IncidentTimeline />;
+}
+
+function DroneSection() {
+    return <DronePatrol />;
 }

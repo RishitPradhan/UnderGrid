@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Worker from "../models/worker.model.js";
+import Incident from "../models/incident.model.js";
 import { sendSMSForWorkers } from "./smsAlert.util.js";
 
 function haversineDistance(coord1, coord2) {
@@ -46,9 +47,28 @@ async function checkWorkersInHighRiskZones() {
         }
 
         for (const worker of workers) {
+            const wasInRisk = worker.riskZone;
             const isInRisk = workerIdsInHighRisk.includes(worker._id.toString());
+
             if (worker.riskZone !== isInRisk) {
                 await Worker.findByIdAndUpdate(worker._id, { $set: { riskZone: isInRisk } });
+            }
+
+            // Save incident when worker ENTERS a risk zone (transition from safe to risk)
+            if (!wasInRisk && isInRisk) {
+                try {
+                    await Incident.create({
+                        workerId: worker.workerId,
+                        workerName: worker.name,
+                        helmetId: worker.helmetId,
+                        role: worker.role,
+                        location: worker.currentLocation,
+                        riskLevel: "High",
+                        description: `${worker.name} entered a high-risk zone`,
+                    });
+                } catch (incErr) {
+                    console.error("Failed to save incident:", incErr.message);
+                }
             }
         }
 
