@@ -39,7 +39,7 @@ export default function Dashboard() {
                     <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center flex-shrink-0">
                         <HardHat className="w-5 h-5 text-black" />
                     </div>
-                    {sidebarOpen && <span className="text-lg font-bold whitespace-nowrap">Under<span className="text-cyan-400">Grid</span></span>}
+                    {sidebarOpen && <span className="text-lg font-bold whitespace-nowrap">undergrid<span className="text-cyan-400">.ai</span></span>}
                 </div>
 
                 {/* Nav */}
@@ -107,7 +107,7 @@ function OverviewSection() {
                         <Shield className="w-7 h-7 text-black" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold">Welcome to UnderGrid.ai</h2>
+                        <h2 className="text-2xl font-bold">Welcome to undergrid.ai</h2>
                         <p className="text-white/40">Real-time underground mining safety monitoring</p>
                     </div>
                 </div>

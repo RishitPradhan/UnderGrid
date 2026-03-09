@@ -31,7 +31,7 @@ export default function Landing() {
                         <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center">
                             <HardHat className="w-5 h-5 text-black" />
                         </div>
-                        <span className="text-lg font-bold tracking-tight">UnderGrid<span className="text-cyan-400">.ai</span></span>
+                        <span className="text-lg font-bold tracking-tight">undergrid<span className="text-cyan-400">.ai</span></span>
                     </div>
                     <div className="hidden md:flex items-center gap-8 text-sm text-white/50">
                         <a href="#features" className="hover:text-white transition-colors">Features</a>
@@ -160,7 +160,7 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between text-sm text-white/30">
                     <div className="flex items-center gap-2">
                         <HardHat className="w-4 h-4" />
-                        <span>UnderGrid.ai v2.0</span>
+                        <span>undergrid.ai v2.0</span>
                     </div>
                     <span>Underground Intelligence Platform</span>
                 </div>

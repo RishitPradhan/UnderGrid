@@ -6,7 +6,7 @@ const logger = winston.createLogger({
     transports: [
         new LokiTransport({
             host: process.env.LOKI_URL || "http://localhost:3100",
-            labels: { app: "undergrid-backend" },
+            labels: { app: "undergrid-ai-backend" },
             json: true,
         }),
         new winston.transports.Console(),

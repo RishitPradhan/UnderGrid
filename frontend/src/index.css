@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════
-   UnderGrid v2 — Premium Black Design System
+   undergrid.ai v2 — Premium Black Design System
    ═══════════════════════════════════════════ */
 
 :root {
@@ -26,7 +26,11 @@
   --glow-red: 0 0 20px rgba(255, 51, 51, 0.3);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
@@ -38,10 +42,23 @@ body {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 /* Glass Card */
 @layer components {
@@ -52,10 +69,12 @@ body {
     border-radius: 16px;
     transition: all 0.3s ease;
   }
+
   .glass-card:hover {
     border-color: var(--border-default);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
+
   .glass-card-accent {
     background: rgba(17, 17, 17, 0.8);
     backdrop-filter: blur(12px);
@@ -63,6 +82,7 @@ body {
     border-radius: 16px;
     transition: all 0.3s ease;
   }
+
   .glass-card-accent:hover {
     border-color: rgba(0, 212, 255, 0.5);
     box-shadow: var(--glow-cyan);
@@ -75,6 +95,7 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   .gradient-text-warm {
     background: linear-gradient(135deg, #ffffff 0%, var(--accent-amber) 50%, var(--accent-red) 100%);
     -webkit-background-clip: text;
@@ -84,48 +105,110 @@ body {
 
   /* Status Dot */
   .status-dot {
-    width: 8px; height: 8px; border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
   }
-  .status-dot-online { background: var(--accent-green); box-shadow: var(--glow-green); }
-  .status-dot-warning { background: var(--accent-amber); box-shadow: 0 0 12px rgba(255, 170, 0, 0.4); }
-  .status-dot-danger { background: var(--accent-red); box-shadow: var(--glow-red); }
+
+  .status-dot-online {
+    background: var(--accent-green);
+    box-shadow: var(--glow-green);
+  }
+
+  .status-dot-warning {
+    background: var(--accent-amber);
+    box-shadow: 0 0 12px rgba(255, 170, 0, 0.4);
+  }
+
+  .status-dot-danger {
+    background: var(--accent-red);
+    box-shadow: var(--glow-red);
+  }
 
   /* Buttons */
   .btn-primary {
     background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
-    color: #000; font-weight: 600; border: none; border-radius: 12px;
-    padding: 10px 20px; cursor: pointer; transition: all 0.3s;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
   }
-  .btn-primary:hover { box-shadow: var(--glow-cyan); transform: translateY(-1px); }
+
+  .btn-primary:hover {
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-1px);
+  }
 
   .btn-ghost {
-    background: transparent; color: var(--text-secondary);
-    border: 1px solid var(--border-default); border-radius: 12px;
-    padding: 10px 20px; cursor: pointer; transition: all 0.3s;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
   }
-  .btn-ghost:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+  .btn-ghost:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+  }
 
   /* Sidebar */
   .sidebar-item {
-    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-    border-radius: 12px; cursor: pointer; transition: all 0.2s;
-    color: var(--text-muted); border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+    border: 1px solid transparent;
   }
-  .sidebar-item:hover { background: rgba(255,255,255,0.03); color: var(--text-secondary); }
+
+  .sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+  }
+
   .sidebar-item.active {
-    background: rgba(0,212,255,0.08); color: var(--accent-cyan);
-    border-color: rgba(0,212,255,0.2);
+    background: rgba(0, 212, 255, 0.08);
+    color: var(--accent-cyan);
+    border-color: rgba(0, 212, 255, 0.2);
   }
 
   /* Stat Card */
   .stat-card {
-    background: var(--bg-card); border: 1px solid var(--border-subtle);
-    border-radius: 16px; padding: 24px; transition: all 0.3s;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s;
   }
-  .stat-card:hover { border-color: var(--border-default); transform: translateY(-2px); }
+
+  .stat-card:hover {
+    border-color: var(--border-default);
+    transform: translateY(-2px);
+  }
 
   /* Leaflet overrides */
-  .leaflet-container { background: #0a0a0a !important; border-radius: 12px; }
-  .leaflet-popup-content-wrapper { background: #1a1a1a !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px !important; }
-  .leaflet-popup-tip { background: #1a1a1a !important; }
+  .leaflet-container {
+    background: #0a0a0a !important;
+    border-radius: 12px;
+  }
+
+  .leaflet-popup-content-wrapper {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px !important;
+  }
+
+  .leaflet-popup-tip {
+    background: #1a1a1a !important;
+  }
 }

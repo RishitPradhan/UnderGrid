@@ -23,9 +23,9 @@ mongoose
     });
 
 app.get("/", (req, res) => {
-    res.send("UnderGrid v2 Backend");
+    res.send("undergrid.ai v2 Backend");
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`UnderGrid v2 backend listening on port ${PORT}`);
+    console.log(`undergrid.ai v2 backend listening on port ${PORT}`);
 });
