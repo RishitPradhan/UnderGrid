@@ -279,3 +279,25 @@ body {
     background: #161616 !important;
   }
 }
+
+/* ─── Danger marker pulse for live simulation ─── */
+@keyframes danger-marker-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(255, 51, 51, 0.4);
+  }
+
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
+  }
+}
+
+/* Leaflet miner marker overrides */
+.miner-marker-icon {
+  background: none !important;
+  border: none !important;
+  overflow: visible !important;
+}

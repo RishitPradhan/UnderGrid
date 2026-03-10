@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -13,8 +14,9 @@ import GeoZoneChart from "@/components/GeoZoneChart";
 import SafetyReport from "@/components/SafetyReport";
 import IncidentTimeline from "@/components/IncidentTimeline";
 import DronePatrol from "@/components/DronePatrol";
+import LiveMinerSimulation from "@/components/LiveMinerSimulation";
 
-type Section = "overview" | "zones" | "miners" | "alerts" | "report" | "incidents" | "drone";
+type Section = "overview" | "zones" | "miners" | "alerts" | "report" | "incidents" | "drone" | "simulation";
 
 const navItems: { id: Section; label: string; icon: any }[] = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -24,6 +26,7 @@ const navItems: { id: Section; label: string; icon: any }[] = [
     { id: "report", label: "AI Report", icon: FileText },
     { id: "incidents", label: "Incidents", icon: Clock },
     { id: "drone", label: "Drone", icon: Crosshair },
+    { id: "simulation", label: "Live Sim", icon: Radio },
 ];
 
 export default function Dashboard() {
@@ -86,6 +89,7 @@ export default function Dashboard() {
                             {active === "report" && <ReportSection />}
                             {active === "incidents" && <IncidentsSection />}
                             {active === "drone" && <DroneSection />}
+                            {active === "simulation" && <SimulationSection />}
                         </motion.div>
                     </AnimatePresence>
                 </div>
@@ -215,4 +219,8 @@ function IncidentsSection() {
 
 function DroneSection() {
     return <DronePatrol />;
+}
+
+function SimulationSection() {
+    return <LiveMinerSimulation />;
 }
